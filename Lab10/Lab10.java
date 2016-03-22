@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Lab09 {
+public class Lab10 {
 
     /**
      * Helper method for printing out arrays.
@@ -15,9 +15,9 @@ public class Lab09 {
 	    System.out.print(arr[arr.length - 1]);
 	}
 	System.out.println(" ]");
-	    
+	
     }
-
+    
     /**
      * Swap two elements in an array
      * @param int[] arr - the array
@@ -25,13 +25,15 @@ public class Lab09 {
      * @param int index2 - the index of the second element to swap
      */
 
-    public static void swap(int[] arr, int index1, int index2) {
-	if (index1 == index2) {
+    public static boolean swap(int[] arr, int index1, int index2) {
+	if (index1 == index2){
+	    return false;
 	    // Do nothing!
 	} else {
 	    int tmp = arr[index1];
 	    arr[index1] = arr[index2];
 	    arr[index2] = tmp;
+	    return true;
 	}
     }
 
@@ -40,18 +42,19 @@ public class Lab09 {
      * @param int[] arr - the array
      */
     
-    public static void selectionSort(int[] arr) {
+    public static int selectionSort(int[] arr) {
 	
 	if (arr.length < 2) {
-	    return;
+	    return 0;
 	}
 	
 	int minIndex = 0;
 	int minVal = 0;
+	int swapCount = 0;
 
 	for (int j = 0; j < (arr.length-1); j++) {
 
-	    printArray(arr);
+	    //printArray(arr);
 	    minIndex = j;
 	    minVal = arr[j];
 	    for(int k = j + 1; k < arr.length; k++) {
@@ -62,9 +65,72 @@ public class Lab09 {
 		    minIndex = k;
 		}
 	    }
-	    swap(arr, j, minIndex);
+	    if (swap(arr, j, minIndex)){
+		
+		swapCount++;
+	    }
 	}
+	
+	return swapCount;
 
+    }
+
+    public static int bubbleSort(int[] arr){
+	if (arr.length < 2){
+	    return 0;
+	}
+	int passCount = 0;
+	int swapCount = 0;
+	while (true){
+	    for (int j = 1; j < arr.length; j++){
+		//printArray(arr);
+		if (arr[j-1] > arr[j]){
+		    swap(arr, j-1, j);
+		    swapCount ++;
+		}
+		else{
+		    passCount ++;
+		}
+	    }
+	    if (passCount == arr.length-1){
+		return swapCount;
+	    }
+	    else{
+		passCount = 0;
+	    }
+	}
+    }
+    
+    public static void a1Sort(int[][] arr){
+	int swaps;
+	for (int j = 0; j < arr.length; j++){
+	    swaps = bubbleSort(arr[j]);
+	    System.out.print("Bubble sort: ");
+	    printArray(arr[j]);
+	    System.out.println("Swaps = " + swaps);
+	}
+    }
+
+    public static void a2Sort (int[][] arr){
+	int swaps;
+	for (int j = 0; j < arr.length; j++){
+	    swaps = selectionSort(arr[j]);
+	    System.out.print("Selection sort: ");
+	    printArray(arr[j]);
+	    System.out.println("Swaps = " + swaps);
+	}
+    }
+
+    public static int[][] deepCopy(int[][] arr){
+	int[][] result = new int[arr.length][];
+	for (int j = 0; j < arr.length; j++){
+	    result[j] = new int[arr[j].length];
+	
+	    for (int i = 0; i < arr[j].length; i++){
+		result[j][i] = arr[j][i];
+	    }
+	}
+	return result;
     }
 
     public static void main(String[] args) {
@@ -74,7 +140,11 @@ public class Lab09 {
 		       {22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 1},
 		       {20, 18, 13, 12, 11, 9, 6, 5, 4, 3, 2, 1, -87, -900, -9, -909, -911, -80, -44, -32, -1000} };
 	
+	int[][] a2 = deepCopy(a1);
 
+        a1Sort(a1);
+	System.out.println("");
+	a2Sort(a2);
     }
 
     
