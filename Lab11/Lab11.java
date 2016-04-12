@@ -77,7 +77,7 @@ public class Lab11 {
 		pHit = p.attack();
 		mHit = g.berserk(pHit);
 		lostG = p.takeDamage(mHit);
-		System.out.println("You dished out " + pHit + " points, "
+		System.out.println("You dished out " + pHit * 3 + " points, "
 				   +"and you received " + mHit + " points.");
 	    
 	    }else if (choice.equals("M")){
